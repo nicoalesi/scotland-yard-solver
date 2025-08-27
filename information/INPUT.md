@@ -5,16 +5,14 @@ The input to the program is provided through a set of structured text files. Eac
 <br>
 
 ## Index
-- [Taxi map](#taxis-map)
-- [Bus map](#buses-map)
+- [Taxi map](#taxi-map)
+- [Bus map](#bus-map)
 - [Underground map](#underground-map)
 - [Ferry map](#ferry-map)
 - [Number of positions](#number-of-positions)
 - [Starting positions](#starting-positions)
 - [Detective tickets](#detective-tickets)
 - [Mr. X tickets](#mr-x-tickets)
-
-<br>
 
 ---
 
