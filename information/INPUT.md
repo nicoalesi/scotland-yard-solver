@@ -21,7 +21,7 @@ The input to the program is provided through a set of structured text files. Eac
 ## Taxi map
 ### File
 ```
-taxi_map.txt
+board-data/taxi_map.txt
 ```
 ### Purpose
 Construct an undirected graph that models the available taxi connections.
@@ -43,7 +43,7 @@ Example:
 ## Bus map
 ### File
 ```
-bus_map.txt
+board-data/bus_map.txt
 ```
 ### Purpose
 Construct an undirected graph that models the available bus connections.
@@ -65,7 +65,7 @@ Example:
 ## Underground map
 ### File
 ```
-underground_map.txt
+board-data/underground_map.txt
 ```
 ### Purpose
 Construct an undirected graph that models the available underground connections.
@@ -87,7 +87,7 @@ Example:
 ## Ferry map
 ### File
 ```
-ferry_map.txt
+board-data/ferry_map.txt
 ```
 ### Purpose
 Construct an undirected graph that models the available ferry connections.
@@ -109,7 +109,7 @@ Example:
 ## Number of positions
 ### File
 ```
-num_of_positions.txt
+board-data/num_of_positions.txt
 ```
 ### Purpose
 Define the total number of locations (positions) on the map.
@@ -128,7 +128,7 @@ Example:
 ## Starting positions
 ### File
 ```
-starting_positions.txt
+board-data/starting_positions.txt
 ```
 ### Purpose
 List the possible starting positions for Mr. X and detectives.
@@ -149,7 +149,7 @@ Example:
 ## Detective tickets
 ### File
 ```
-detective_tickets.txt
+game-data/detective_tickets.txt
 ```
 ### Purpose
 Specify how many tickets each detective gets for each transportation type.
@@ -172,7 +172,7 @@ Example:
 ## Mr. X tickets
 ### File
 ```
-mr_x_tickets.txt
+game-data/mr_x_tickets.txt
 ```
 ### Purpose
 Specify how many tickets Mr. X gets for each transportation type.
