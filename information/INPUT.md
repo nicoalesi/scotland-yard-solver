@@ -10,9 +10,12 @@ The input to the program is provided through a set of structured text files. Eac
 - [Underground map](#underground-map)
 - [Ferry map](#ferry-map)
 - [Number of positions](#number-of-positions)
-- [Starting positions](#starting-positions)
+- [General starting positions](#general-starting-positions)
 - [Detective tickets](#detective-tickets)
 - [Mr. X tickets](#mr-x-tickets)
+- [Number of players](#number-of-players)
+- [Mr. X starting position](#mr-x-starting-position)
+- [Detectives starting positions](#detectives-starting-positions)
 
 ---
 
@@ -125,10 +128,10 @@ Example:
 199
 ```
 
-## Starting positions
+## General starting positions
 ### File
 ```
-board-data/starting_positions.txt
+board-data/general_starting_positions.txt
 ```
 ### Purpose
 List the possible starting positions for Mr. X and detectives.
@@ -194,4 +197,63 @@ Example:
 3
 5
 2
+```
+
+## Number of players
+###
+```
+game-data/num_of_players.txt
+```
+### Purpose
+Specify how many players are participating in the current game, including Mr. X.
+### Format
+Single line with an integer.
+
+```
+[players]
+```
+
+Example:
+```
+6
+```
+
+## Mr. X starting position
+### File
+```
+game-data/mr_x_starting_position.txt
+```
+### Purpose
+Define the starting position of Mr. X in the current game.
+### Format
+Single line with an integer.
+
+```
+[position]
+```
+
+Example:
+```
+13
+```
+
+## Detectives starting positions
+### File
+```
+game-data/detectives_starting_positions.txt
+```
+### Purpose
+List the starting positions of the detectives in the current game.
+### Format
+Each line contains a single integer representing one starting position.
+
+```
+[position]
+```
+
+Example:
+```
+13
+117
+197
 ```
