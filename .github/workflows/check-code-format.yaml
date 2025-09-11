@@ -1,0 +1,31 @@
+name: Check Code Formatting
+
+on:
+  workflow_call:
+    inputs:
+      language:
+        description: The language to run the format checker for
+        required: true
+        type: string
+      branch:
+        description: The branch to check
+        required: true
+        type: string
+
+jobs:
+  format-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.branch }}
+
+      - name: Install checker [C++]
+        if: ${{ inputs.language }} == 'cpp'
+        run: sudo apt-get update && sudo apt-get install -y clang-format
+
+      - name: Run checker [C++]
+        if: ${{ inputs.language }} == 'cpp'
+        run: clang-format --dry-run --Werror src/*.cpp include/*.h tests/cpp/*.cpp
