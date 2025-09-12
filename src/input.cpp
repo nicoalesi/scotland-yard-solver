@@ -32,10 +32,11 @@ void read_ints(std::vector<int> &result, const std::string &filepath,
     }
 }
 
-
-void read_int_pairs(std::vector<std::pair<int, int>>& result, const std::string& filepath, int lines) {
+void read_int_pairs(std::vector<std::pair<int, int>> &result,
+                    const std::string &filepath, int lines) {
     if (!result.empty()) {
-        throw std::invalid_argument("Expected empty vector as output parameter.");
+        throw std::invalid_argument(
+            "Expected empty vector as output parameter.");
     }
 
     std::ifstream file(filepath);
