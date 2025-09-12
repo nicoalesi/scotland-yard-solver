@@ -1,0 +1,31 @@
+name: Lint Code
+
+on:
+  workflow_call:
+    inputs:
+      language:
+        description: The language to run the linter for
+        required: true
+        type: string
+      branch:
+        description: The branch to lint
+        required: true
+        type: string
+
+jobs:
+  lint-code:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.branch }}
+
+      - name: Install linter [C++]
+        if: ${{ inputs.language }} == 'cpp'
+        run: sudo apt-get update && sudo apt-get install -y clang-tidy
+
+      - name: Run linter [C++]
+        if: ${{ inputs.language }} == 'cpp'
+        run: clang-tidy src/*.cpp tests/cpp/*.cpp
