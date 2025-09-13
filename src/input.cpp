@@ -7,13 +7,18 @@ void read_ints(std::vector<int> &result, const std::string &filepath,
             "Expected empty vector as output parameter.");
     }
 
+    if (lines < 0) {
+        throw std::invalid_argument(
+            "Expected positive integer as number of lines.");
+    }
+
     std::ifstream file(filepath);
 
     if (!file.is_open()) {
         throw std::runtime_error("Could not open file '" + filepath + "'.");
     }
 
-    result.reserve(lines);
+    result.reserve((size_t)lines);
     std::string line;
     int count = 0;
     while (count < lines && std::getline(file, line)) {
@@ -39,13 +44,18 @@ void read_int_pairs(std::vector<std::pair<int, int>> &result,
             "Expected empty vector as output parameter.");
     }
 
+    if (lines < 0) {
+        throw std::invalid_argument(
+            "Expected positive integer as number of lines.");
+    }
+
     std::ifstream file(filepath);
 
     if (!file.is_open()) {
         throw std::runtime_error("Could not open file '" + filepath + "'.");
     }
 
-    result.reserve(lines);
+    result.reserve((size_t)lines);
     std::string line;
     int count = 0;
     while (count < lines && std::getline(file, line)) {

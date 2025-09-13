@@ -20,6 +20,7 @@
  * file.
  *
  * @throws std::invalid_argument If the output vector is not empty.
+ * @throws std::invalid_argument If `lines` is negative.
  * @throws std::runtime_error If the file cannot be opened.
  * @throws std::runtime_error If a line does not contain a valid integer.
  * @throws std::runtime_error If the file contains fewer than `lines` lines.
@@ -53,6 +54,7 @@ void read_ints(std::vector<int> &result, const std::string &filepath,
  * the file.
  *
  * @throws std::invalid_argument If the output vector is not empty.
+ * @throws std::invalid_argument If `lines` is negative.
  * @throws std::runtime_error If the file cannot be opened.
  * @throws std::runtime_error If a line does not contain exactly two valid
  * integers.
