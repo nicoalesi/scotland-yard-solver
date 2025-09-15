@@ -20,8 +20,6 @@ set(WARNING_FLAGS
     -Werror
 )
 
-enable_testing()
-
 add_compile_options(
     ${SANITIZE_FLAGS}
     ${WARNING_FLAGS}
@@ -39,4 +37,12 @@ target_include_directories(input_lib
     ${PROJECT_SOURCE_DIR}/include
 )
 
-add_subdirectory(tests/cpp)
+option(BUILD_TESTING
+    "Enable tests builds"
+    OFF
+)
+
+if(BUILD_TESTING)
+    enable_testing()
+    add_subdirectory(tests/cpp)
+endif()
