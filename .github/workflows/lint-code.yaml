@@ -23,7 +23,7 @@ jobs:
           ref: ${{ inputs.branch }}
 
       - name: Set up environment [C++]
-        if: ${{ inputs.branch }} == 'cpp'
+        if: ${{ inputs.language }} == 'cpp'
         run: |
           sudo apt-get update && sudo apt-get install libgtest-dev
           mkdir build && cd build
