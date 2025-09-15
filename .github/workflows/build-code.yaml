@@ -1,0 +1,47 @@
+name: Build Code
+
+on:
+  workflow_call:
+    inputs:
+      language:
+        description: The language to build the code for
+        required: true
+        type: string
+      branch:
+        description: The branch to build
+        required: true
+        type: string
+
+jobs:
+  build-code:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.branch }}
+
+      - name: Set up environment [C++]
+        if: ${{ inputs.language }} == 'cpp'
+        run: |
+          sudo apt-get update && sudo apt-get install libgtest-dev
+          mkdir build && cd build
+          cmake -DBUILD_TESTING=ON ..
+
+      - name: Build code [C++]
+        if: ${{ inputs.language }} == 'cpp'
+        run: cd build && cmake --build .
+
+      - name: Tar files [C++]
+        if: ${{ inputs.language }} == 'cpp'
+        run: tar -cvf build.tar ./build/
+
+      - name: Upload build artifacts [C++]
+        if: ${{ inputs.language }} == 'cpp'
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: ./build.tar
+          if-no-files-found: error
+          retention-days: 1

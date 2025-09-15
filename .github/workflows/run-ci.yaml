@@ -1,0 +1,34 @@
+name: Run CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  check-format:
+    uses: ./.github/workflows/check-code-format.yaml
+    with:
+      language: cpp
+      branch: ${{ github.ref_name || github.ref }}
+    
+  lint-code:
+    uses: ./.github/workflows/lint-code.yaml
+    with:
+      language: cpp
+      branch: ${{ github.ref_name || github.ref }}
+
+  build-code:
+    uses: ./.github/workflows/build-code.yaml
+    with:
+      language: cpp
+      branch: ${{ github.ref_name || github.ref }}
+
+  run-tests:
+    needs: build-code
+    uses: ./.github/workflows/run-tests.yaml
+    with:
+      language: cpp
+      branch: ${{ github.ref_name || github.ref }}

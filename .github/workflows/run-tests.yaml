@@ -22,16 +22,16 @@ jobs:
         with:
           ref: ${{ inputs.branch }}
 
-      - name: Set up environment [C++]
+      - name: Download build artifacts [C++]
         if: ${{ inputs.language }} == 'cpp'
-        run: |
-          sudo apt-get update && sudo apt-get install libgtest-dev
-          mkdir build && cd build
-          cmake -DBUILD_TESTING=ON ..
+        uses: actions/download-artifact@v4
+        with:
+          name: build
+          path: ./build/
 
-      - name: Build tests [C++]
+      - name: Untar files [C++]
         if: ${{ inputs.language }} == 'cpp'
-        run: cd build && cmake --build .
+        run: tar -xvf ./build/build.tar
 
       - name: Run tests [C++]
         if: ${{ inputs.language }} == 'cpp'
