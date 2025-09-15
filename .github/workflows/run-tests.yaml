@@ -1,0 +1,38 @@
+name: Run Tests
+
+on:
+  workflow_call:
+    inputs:
+      language:
+        description: The language to run the tests for
+        required: true
+        type: string
+      branch:
+        description: The branch to test
+        required: true
+        type: string
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.branch }}
+
+      - name: Set up environment [C++]
+        if: ${{ inputs.language }} == 'cpp'
+        run: |
+          sudo apt-get update && sudo apt-get install libgtest-dev
+          mkdir build && cd build
+          cmake -DBUILD_TESTING=ON ..
+
+      - name: Build tests [C++]
+        if: ${{ inputs.language }} == 'cpp'
+        run: cd build && cmake --build .
+
+      - name: Run tests [C++]
+        if: ${{ inputs.language }} == 'cpp'
+        run: cd build && ctest
