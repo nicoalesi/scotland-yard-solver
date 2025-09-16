@@ -19,7 +19,8 @@
  *
  * @throws std::runtime_error If the file cannot be opened.
  * @throws std::runtime_error If the file is empty or no lines can be read.
- * @throws std::runtime_error If the first line does not contain a valid integer.
+ * @throws std::runtime_error If the first line does not contain a valid
+ * integer.
  *
  * @note Only the first line of the file is read. Additional content is ignored.
  *
