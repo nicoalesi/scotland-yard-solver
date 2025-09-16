@@ -184,3 +184,58 @@ TEST(read_int_pairs, ThrowIfNotEnoughLines) {
 
     delete_file(file);
 }
+
+// No error
+TEST(read_int, ReadCorrectly) {
+    std::string file = create_file("1\n");
+
+    EXPECT_EQ(1, read_int(file));
+
+    delete_file(file);
+}
+
+// Error if file does not exist
+TEST(read_int, ThrowIfFileMissing) {
+    std::string file = "nonexistent_file.txt";
+
+    EXPECT_THROW(read_int(file), std::runtime_error);
+
+    try {
+        read_int(file);
+    } catch (const std::runtime_error &e) {
+        std::string msg = e.what();
+        EXPECT_TRUE(msg.find("Could not open file") != std::string::npos);
+    }
+}
+
+// Error if invalid integer in file
+TEST(read_int, ThrowIfInvalidInteger) {
+    std::string file = create_file("abc123");
+
+    EXPECT_THROW(read_int(file), std::runtime_error);
+
+    try {
+        read_int(file);
+    } catch (const std::runtime_error &e) {
+        std::string msg = e.what();
+        EXPECT_TRUE(msg.find("Invalid integer") != std::string::npos);
+    }
+
+    delete_file(file);
+}
+
+// Error if file is empty
+TEST(read_int, ThrowIfEmptyFile) {
+    std::string file = create_file("");
+
+    EXPECT_THROW(read_int(file), std::runtime_error);
+
+    try {
+        read_int(file);
+    } catch (const std::runtime_error &e) {
+        std::string msg = e.what();
+        EXPECT_TRUE(msg.find("No integer found") != std::string::npos);
+    }
+
+    delete_file(file);
+}

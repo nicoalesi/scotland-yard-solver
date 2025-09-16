@@ -6,6 +6,32 @@
 #include <vector>
 
 /**
+ * @brief Reads a single integer from the first line of a text file.
+ *
+ * This function opens the file specified by `filepath` and attempts to read
+ * the first line. It expects the line to contain a single valid integer,
+ * which it parses and returns.
+ *
+ * @param[in] filepath Path to the input text file. The first line must contain
+ * a valid integer.
+ *
+ * @return The integer value parsed from the first line of the file.
+ *
+ * @throws std::runtime_error If the file cannot be opened.
+ * @throws std::runtime_error If the file is empty or no lines can be read.
+ * @throws std::runtime_error If the first line does not contain a valid integer.
+ *
+ * @note Only the first line of the file is read. Additional content is ignored.
+ *
+ * @example
+ * @code
+ * int value = read_int("input.txt");
+ * // value now contains the integer read from the first line of input.txt
+ * @endcode
+ */
+int read_int(const std::string &filepath);
+
+/**
  * @brief Reads a fixed number of integers from a text file into a vector.
  *
  * This function reads exactly `lines` number of lines from the file at the

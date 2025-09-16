@@ -1,5 +1,24 @@
 #include "input.h"
 
+int read_int(const std::string &filepath) {
+    std::ifstream file(filepath);
+
+    if (!file.is_open()) {
+        throw std::runtime_error("Could not open file '" + filepath + "'.");
+    }
+
+    std::string line;
+    if (std::getline(file, line)) {
+        try {
+            return std::stoi(line);
+        } catch (const std::exception &) {
+            throw std::runtime_error("Invalid integer.");
+        }
+    } else {
+        throw std::runtime_error("No integer found.");
+    }
+}
+
 void read_ints(std::vector<int> &result, const std::string &filepath,
                int lines) {
     if (!result.empty()) {
