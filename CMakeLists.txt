@@ -32,9 +32,21 @@ add_link_options(
 add_library(input_lib
     src/input.cpp
 )
+add_library(initialize_lib
+    src/initialize.cpp
+)
 target_include_directories(input_lib
     PUBLIC
     ${PROJECT_SOURCE_DIR}/include
+)
+target_include_directories(initialize_lib
+    PUBLIC
+    ${PROJECT_SOURCE_DIR}/include
+)
+
+target_link_libraries(initialize_lib
+    PUBLIC
+    input_lib
 )
 
 option(BUILD_TESTING
