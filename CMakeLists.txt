@@ -35,6 +35,9 @@ add_library(input_lib
 add_library(initialize_lib
     src/initialize.cpp
 )
+add_library(types_lib
+    src/types.cpp
+)
 target_include_directories(input_lib
     PUBLIC
     ${PROJECT_SOURCE_DIR}/include
@@ -43,10 +46,19 @@ target_include_directories(initialize_lib
     PUBLIC
     ${PROJECT_SOURCE_DIR}/include
 )
+target_include_directories(types_lib
+    PUBLIC
+    ${PROJECT_SOURCE_DIR}/include
+)
 
 target_link_libraries(initialize_lib
     PUBLIC
     input_lib
+)
+
+target_link_libraries(initialize_lib
+    PUBLIC
+    types_lib
 )
 
 option(BUILD_TESTING
