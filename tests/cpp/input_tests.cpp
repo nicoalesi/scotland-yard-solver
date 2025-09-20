@@ -1,3 +1,5 @@
+// NOLINTBEGIN(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
+
 #include <gtest/gtest.h>
 
 #include "input.h"
@@ -18,10 +20,65 @@ void delete_file(const std::string &filename) {
 }
 
 // No error
+TEST(read_int, ReadCorrectly) {
+    std::string file = create_file("1\n");
+
+    EXPECT_EQ(1, read_int(file));
+
+    delete_file(file);
+}
+
+// Error if file missing
+TEST(read_int, ThrowIfFileMissing) {
+    std::string file = "nonexistent_file.txt";
+
+    EXPECT_THROW(read_int(file), std::runtime_error);
+
+    try {
+        read_int(file);
+    } catch (const std::runtime_error &e) {
+        std::string msg = e.what();
+        EXPECT_TRUE(msg.find("Could not open file") != std::string::npos);
+    }
+}
+
+// Error if invalid integer in file
+TEST(read_int, ThrowIfInvalidInteger) {
+    std::string file = create_file("abc123");
+
+    EXPECT_THROW(read_int(file), std::runtime_error);
+
+    try {
+        read_int(file);
+    } catch (const std::runtime_error &e) {
+        std::string msg = e.what();
+        EXPECT_TRUE(msg.find("Invalid integer") != std::string::npos);
+    }
+
+    delete_file(file);
+}
+
+// Error if file is empty
+TEST(read_int, ThrowIfEmptyFile) {
+    std::string file = create_file("");
+
+    EXPECT_THROW(read_int(file), std::runtime_error);
+
+    try {
+        read_int(file);
+    } catch (const std::runtime_error &e) {
+        std::string msg = e.what();
+        EXPECT_TRUE(msg.find("No integer found") != std::string::npos);
+    }
+
+    delete_file(file);
+}
+
+// No error
 TEST(read_ints, ReadCorrectly) {
     std::string file = create_file("10\n20\n30\n");
 
-    std::vector<int> result;
+    std::vector<int32_t> result;
     ASSERT_NO_THROW(read_ints(result, file, 3));
     EXPECT_EQ(result.size(), 3);
     EXPECT_EQ(result[0], 10);
@@ -33,13 +90,13 @@ TEST(read_ints, ReadCorrectly) {
 
 // Error if vector not empty
 TEST(read_ints, ThrowIfVectorNotEmpty) {
-    std::vector<int> result = {1, 2};
+    std::vector<int32_t> result = {1, 2};
     EXPECT_THROW(read_ints(result, "anyfile.txt", 1), std::invalid_argument);
 }
 
-// Error if file does not exist
+// Error if file missing
 TEST(read_ints, ThrowIfFileMissing) {
-    std::vector<int> result;
+    std::vector<int32_t> result;
     EXPECT_THROW(read_ints(result, "nonexistent_file.txt", 1),
                  std::runtime_error);
 }
@@ -48,7 +105,7 @@ TEST(read_ints, ThrowIfFileMissing) {
 TEST(read_ints, ThrowIfInvalidInteger) {
     std::string file = create_file("10\nabc\n30\n");
 
-    std::vector<int> result;
+    std::vector<int32_t> result;
     EXPECT_THROW(read_ints(result, file, 3), std::runtime_error);
     result.clear();
 
@@ -66,7 +123,7 @@ TEST(read_ints, ThrowIfInvalidInteger) {
 TEST(read_ints, ThrowIfNotEnoughLines) {
     std::string file = create_file("10\n20\n");
 
-    std::vector<int> result;
+    std::vector<int32_t> result;
     EXPECT_THROW(read_ints(result, file, 3), std::runtime_error);
     result.clear();
 
@@ -87,7 +144,7 @@ TEST(read_int_pairs, ReadCorrectly) {
                                    "3 4\n"
                                    "5 6\n");
 
-    std::vector<std::pair<int, int>> result;
+    std::vector<std::pair<int32_t, int32_t>> result;
     ASSERT_NO_THROW(read_int_pairs(result, file, 3));
     EXPECT_EQ(result.size(), 3);
     EXPECT_EQ(result[0], std::make_pair(1, 2));
@@ -99,14 +156,14 @@ TEST(read_int_pairs, ReadCorrectly) {
 
 // Error if vector not empty
 TEST(read_int_pairs, ThrowIfVectorNotEmpty) {
-    std::vector<std::pair<int, int>> result = {{1, 2}, {3, 4}};
+    std::vector<std::pair<int32_t, int32_t>> result = {{1, 2}, {3, 4}};
     EXPECT_THROW(read_int_pairs(result, "anyfile.txt", 1),
                  std::invalid_argument);
 }
 
-// Error if file does not exist
+// Error if file missing
 TEST(read_int_pairs, ThrowIfFileMissing) {
-    std::vector<std::pair<int, int>> result;
+    std::vector<std::pair<int32_t, int32_t>> result;
     EXPECT_THROW(read_int_pairs(result, "nonexistent_file.txt", 1),
                  std::runtime_error);
 }
@@ -117,7 +174,7 @@ TEST(read_int_pairs, ThrowIfInvalidIntegerPair) {
                                    "abc\n"
                                    "30 21\n");
 
-    std::vector<std::pair<int, int>> result;
+    std::vector<std::pair<int32_t, int32_t>> result;
     EXPECT_THROW(read_int_pairs(result, file, 3), std::runtime_error);
     result.clear();
 
@@ -170,7 +227,7 @@ TEST(read_int_pairs, ThrowIfInvalidIntegerPair) {
 TEST(read_int_pairs, ThrowIfNotEnoughLines) {
     std::string file = create_file("10 9\n");
 
-    std::vector<std::pair<int, int>> result;
+    std::vector<std::pair<int32_t, int32_t>> result;
     EXPECT_THROW(read_int_pairs(result, file, 3), std::runtime_error);
     result.clear();
 
@@ -185,57 +242,4 @@ TEST(read_int_pairs, ThrowIfNotEnoughLines) {
     delete_file(file);
 }
 
-// No error
-TEST(read_int, ReadCorrectly) {
-    std::string file = create_file("1\n");
-
-    EXPECT_EQ(1, read_int(file));
-
-    delete_file(file);
-}
-
-// Error if file does not exist
-TEST(read_int, ThrowIfFileMissing) {
-    std::string file = "nonexistent_file.txt";
-
-    EXPECT_THROW(read_int(file), std::runtime_error);
-
-    try {
-        read_int(file);
-    } catch (const std::runtime_error &e) {
-        std::string msg = e.what();
-        EXPECT_TRUE(msg.find("Could not open file") != std::string::npos);
-    }
-}
-
-// Error if invalid integer in file
-TEST(read_int, ThrowIfInvalidInteger) {
-    std::string file = create_file("abc123");
-
-    EXPECT_THROW(read_int(file), std::runtime_error);
-
-    try {
-        read_int(file);
-    } catch (const std::runtime_error &e) {
-        std::string msg = e.what();
-        EXPECT_TRUE(msg.find("Invalid integer") != std::string::npos);
-    }
-
-    delete_file(file);
-}
-
-// Error if file is empty
-TEST(read_int, ThrowIfEmptyFile) {
-    std::string file = create_file("");
-
-    EXPECT_THROW(read_int(file), std::runtime_error);
-
-    try {
-        read_int(file);
-    } catch (const std::runtime_error &e) {
-        std::string msg = e.what();
-        EXPECT_TRUE(msg.find("No integer found") != std::string::npos);
-    }
-
-    delete_file(file);
-}
+// NOLINTEND(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)

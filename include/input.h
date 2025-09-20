@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <fstream>
 #include <stdexcept>
 #include <string>
@@ -26,11 +27,11 @@
  *
  * @example
  * @code
- * int value = read_int("input.txt");
+ * int32_t value = read_int("input.txt");
  * // value now contains the integer read from the first line of input.txt
  * @endcode
  */
-int read_int(const std::string &filepath);
+int32_t read_int(const std::string &filepath);
 
 /**
  * @brief Reads a fixed number of integers from a text file into a vector.
@@ -47,7 +48,6 @@ int read_int(const std::string &filepath);
  * file.
  *
  * @throws std::invalid_argument If the output vector is not empty.
- * @throws std::invalid_argument If `lines` is negative.
  * @throws std::runtime_error If the file cannot be opened.
  * @throws std::runtime_error If a line does not contain a valid integer.
  * @throws std::runtime_error If the file contains fewer than `lines` lines.
@@ -57,13 +57,13 @@ int read_int(const std::string &filepath);
  *
  * @example
  * @code
- * std::vector<int> numbers;
+ * std::vector<int32_t> numbers;
  * read_ints(numbers, "numbers.txt", 100);
  * // numbers now contains 100 integers from the file
  * @endcode
  */
-void read_ints(std::vector<int> &result, const std::string &filepath,
-               int lines);
+void read_ints(std::vector<int32_t> &result, const std::string &filepath,
+               uint32_t lines);
 
 /**
  * @brief Reads a fixed number of integer pairs from a text file into a vector.
@@ -81,7 +81,6 @@ void read_ints(std::vector<int> &result, const std::string &filepath,
  * the file.
  *
  * @throws std::invalid_argument If the output vector is not empty.
- * @throws std::invalid_argument If `lines` is negative.
  * @throws std::runtime_error If the file cannot be opened.
  * @throws std::runtime_error If a line does not contain exactly two valid
  * integers.
@@ -92,10 +91,10 @@ void read_ints(std::vector<int> &result, const std::string &filepath,
  *
  * @example
  * @code
- * std::vector<std::pair<int, int>> pairs;
+ * std::vector<std::pair<int32_t, int32_t>> pairs;
  * read_int_pairs(pairs, "pairs.txt", 50);
  * // pairs now contains 50 integer pairs from the file
  * @endcode
  */
-void read_int_pairs(std::vector<std::pair<int, int>> &result,
-                    const std::string &filepath, int lines);
+void read_int_pairs(std::vector<std::pair<int32_t, int32_t>> &result,
+                    const std::string &filepath, uint32_t lines);
